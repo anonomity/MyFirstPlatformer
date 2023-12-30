@@ -1,0 +1,10 @@
+res://scenes/level_1.tscn
+res://scripts/player.gd
+res://scripts/level_1.gd
+res://scenes/player.tscn
+res://scenes/level_2.tscn
+res://scenes/coffee_beans.tscn
+res://scripts/coffee_beans.gd
+res://scenes/ui.tscn
+res://scripts/Global_Script.gd
+res://scripts/ui.gd

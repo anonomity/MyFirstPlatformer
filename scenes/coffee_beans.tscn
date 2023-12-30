@@ -1,0 +1,73 @@
+[gd_scene load_steps=9 format=3 uid="uid://ftnlps016uts"]
+
+[ext_resource type="Script" path="res://scripts/coffee_beans.gd" id="1_3jvli"]
+[ext_resource type="Texture2D" uid="uid://dpfpnr00wesir" path="res://assets/tileset.png" id="1_j16et"]
+[ext_resource type="AudioStream" uid="uid://c1p3uqijq7xk8" path="res://sounds/beep 2.wav" id="3_3cts3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b7e5g"]
+atlas = ExtResource("1_j16et")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jwjgk"]
+radius = 17.2
+
+[sub_resource type="Animation" id="Animation_nj16d"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -14.875), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_xsgp4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -14.875)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i6g0c"]
+_data = {
+"RESET": SubResource("Animation_xsgp4"),
+"idle": SubResource("Animation_nj16d")
+}
+
+[node name="coffee_beans" type="Area2D"]
+script = ExtResource("1_3jvli")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -14.875)
+scale = Vector2(2.5, 2.375)
+texture = SubResource("AtlasTexture_b7e5g")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, -8)
+shape = SubResource("CircleShape2D_jwjgk")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_i6g0c")
+}
+autoplay = "idle"
+
+[node name="beep_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_3cts3")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="finished" from="beep_sound" to="." method="_on_beep_sound_finished"]
